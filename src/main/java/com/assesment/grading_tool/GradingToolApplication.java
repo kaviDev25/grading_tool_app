@@ -1,13 +1,7 @@
 package com.assesment.grading_tool;
 
-import com.assesment.grading_tool.model.Assignment;
-import com.assesment.grading_tool.model.Course;
-import com.assesment.grading_tool.model.Question;
-import com.assesment.grading_tool.model.Student;
-import com.assesment.grading_tool.repository.AssignmentRepo;
-import com.assesment.grading_tool.repository.CourseRepo;
-import com.assesment.grading_tool.repository.QuestionsRepo;
-import com.assesment.grading_tool.repository.StudentRepo;
+import com.assesment.grading_tool.model.*;
+import com.assesment.grading_tool.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -34,6 +28,9 @@ public class GradingToolApplication {
 
 		QuestionsRepo questionsRepo =
 				configurableApplicationContext.getBean(QuestionsRepo.class);
+
+		SubmissionRepo submissionRepo =
+				configurableApplicationContext.getBean(SubmissionRepo.class);
 
 		Course course = new Course("Software Engineering","IT2030");
 		Course course1 = new Course("DBMS","IT2050");
@@ -70,6 +67,18 @@ public class GradingToolApplication {
 
 		questionsRepo.saveAll(questions);
 
+		Submissions submission = new Submissions(1,2,1,1,
+				"A database management system (DBMS) is system software for creating and managing databases. " +
+						"A DBMS makes it possible for end users to create, protect, read, update and delete data in a database.",
+				"correct");
+
+		Submissions submission1 = new Submissions(2,2,1,1,
+				"A database management system (DBMS) is system software for creating and managing databases. " ,
+				"partial");
+
+		List<Submissions> submissions = Arrays.asList(submission,submission1);
+		submissionRepo.saveAll(submissions);
+
 	}
-	}
+}
 
