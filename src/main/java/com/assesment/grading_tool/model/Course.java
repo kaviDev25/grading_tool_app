@@ -15,15 +15,21 @@ public class Course {
     private String keyName;
     @Column(nullable = false)
     private String courseName;
+
     @ManyToMany(mappedBy = "courses")
     private List<Student> students = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Assignment> assignments = new ArrayList<>();
 
 
     public Course(Long id, String keyName, String courseName) {
         this.id = id;
         this.keyName = keyName;
         this.courseName = courseName;
-        //this.noOfStudents = noOfStudents;
     }
 
     public Course(String courseName, String keyName) {
@@ -51,17 +57,13 @@ public class Course {
         this.courseName = courseName;
     }
 
-//    //public Set<Student> getNoOfStudents() {
-//        return noOfStudents;
-//    }
-
-//    public void setNoOfStudents(Set<Student> noOfStudents) {
-//        this.noOfStudents = noOfStudents;
-//    }
-
     public String getKeyName() {return keyName;}
 
     public void setKeyName(String keyName) {this.keyName = keyName;}
+
+    public List<Assignment> getAssignments() {return assignments;}
+
+    public void setAssignments(List<Assignment> assignments) {this.assignments = assignments;}
 
     @Override
     public String toString() {
@@ -69,7 +71,6 @@ public class Course {
                 "id='" + id + '\'' +
                 ", keyName='" + keyName + '\'' +
                 ", courseName='" + courseName + '\'' +
-                //", noOfStudents=" + noOfStudents +
                 '}';
     }
 }
