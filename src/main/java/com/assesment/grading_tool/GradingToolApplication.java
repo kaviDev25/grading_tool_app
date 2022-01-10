@@ -32,6 +32,7 @@ public class GradingToolApplication {
 		SubmissionRepo submissionRepo =
 				configurableApplicationContext.getBean(SubmissionRepo.class);
 
+
 		Course course = new Course("Software Engineering","IT2030");
 		Course course1 = new Course("DBMS","IT2050");
 		List<Course> courses =Arrays.asList(course,course1);
@@ -61,8 +62,8 @@ public class GradingToolApplication {
 		assignmentRepo.saveAll(assignments);
 		assignmentRepo.saveAll(assignments1);
 
-		Question question = new Question(15.25,17,9,3,5,assignment_SE);
-		Question question1 = new Question(20.37,21,10,8,3,assignment_DB);
+		Question question = new Question(15.25,17,9,3,5,assignment_SE,1);
+		Question question1 = new Question(20.37,21,10,8,3,assignment_DB,2);
 		List<Question> questions = Arrays.asList(question,question1);
 
 		questionsRepo.saveAll(questions);
@@ -70,13 +71,17 @@ public class GradingToolApplication {
 		Submissions submission = new Submissions(1,2,1,1,
 				"A database management system (DBMS) is system software for creating and managing databases. " +
 						"A DBMS makes it possible for end users to create, protect, read, update and delete data in a database.",
-				"correct");
+				"correct",45);
 
 		Submissions submission1 = new Submissions(2,2,1,1,
 				"A database management system (DBMS) is system software for creating and managing databases. " ,
-				"partial");
+				"partial",57);
 
-		List<Submissions> submissions = Arrays.asList(submission,submission1);
+		Submissions submission2 = new Submissions(2,1,1,1,
+				"In software engineering, a class diagram in the Unified Modeling Language is a type of static structure diagram that describes the structure of a system by showing the system's classes, their attributes, operations, and the relationships among objects" ,
+				"correct",60);
+
+		List<Submissions> submissions = Arrays.asList(submission,submission1,submission2);
 		submissionRepo.saveAll(submissions);
 
 	}
