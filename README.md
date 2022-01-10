@@ -42,3 +42,14 @@ Run
 - Then get results by click on the "Send Button"
 
 
+# Results
+- Due to some error cannot show with PostMan
+
+# Statistics of Questions
+
+![image](https://user-images.githubusercontent.com/68672823/148756678-4d153771-e683-4d16-afac-9776d0f1565a.png)
+
+--There are Some errors which could not figure out thereforecannot indicate other API's results
+
+
+
