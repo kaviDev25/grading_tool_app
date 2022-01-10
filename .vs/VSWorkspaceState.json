@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\com",
+    "\\src\\main\\java\\com\\assesment",
+    "\\src\\main\\java\\com\\assesment\\grading_tool",
+    "\\src\\main\\java\\com\\assesment\\grading_tool\\controller",
+    "\\src\\main\\java\\com\\assesment\\grading_tool\\model",
+    "\\src\\main\\java\\com\\assesment\\grading_tool\\service"
+  ],
+  "SelectedNode": "\\README.md",
+  "PreviewInSolutionExplorer": false
+}
