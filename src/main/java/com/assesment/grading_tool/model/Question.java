@@ -7,7 +7,9 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private Long questionId;
+    private int questionId;
+    @Column(nullable = false)
+    private String question;
     @Column(nullable = false)
     private double totalTimeSpentInHrs;
     @Column(nullable = false)
@@ -20,14 +22,18 @@ public class Question {
     private int totalPartialAnswers;
     @Column(nullable = false)
     private int courseId;
-
+    double averageTime;
+    int averageCorrect, averageIncorrect;
+    //... 1..* questions in an assignment. So, in question entity side it should be Many to One
     @ManyToOne
     @JoinColumns(
             {@JoinColumn(name = "assignment_id", referencedColumnName = "assignmentId")})
     private Assignment assignment;
 
 
-    public Question(double totalTimeSpentInHrs, int totalSubmissions, int totalCorrectAnswers, int totalIncorrectAnswers, int totalPartialAnswers, Assignment assignment,int courseId) {
+
+    public Question(String question ,double totalTimeSpentInHrs, int totalSubmissions, int totalCorrectAnswers, int totalIncorrectAnswers, int totalPartialAnswers, Assignment assignment,int courseId) {
+        this.question = question;
         this.totalTimeSpentInHrs = totalTimeSpentInHrs;
         this.totalSubmissions = totalSubmissions;
         this.totalCorrectAnswers = totalCorrectAnswers;
@@ -35,6 +41,14 @@ public class Question {
         this.totalPartialAnswers = totalPartialAnswers;
         this.assignment = assignment;
         this.courseId = courseId;
+    }
+
+    public Question(int questionId, String question, double averageTime, int averageCorrect, int averageIncorrect) {
+        this.questionId = questionId;
+        this.question = question;
+        this.averageTime = averageTime;
+        this.averageCorrect = averageCorrect;
+        this.averageIncorrect = averageIncorrect;
     }
 
     public Question() {
@@ -47,9 +61,9 @@ public class Question {
         this.courseId = courseId;
     }
 
-    public Long getQuestionId() {return questionId;}
+    public int getQuestionId() {return questionId;}
 
-    public void setQuestionId(Long questionId) {this.questionId = questionId;}
+    public void setQuestionId(int questionId) {this.questionId = questionId;}
 
     public double getTotalTimeSpentInHrs() {
         return totalTimeSpentInHrs;
@@ -78,4 +92,19 @@ public class Question {
     public Assignment getAssignment() {return assignment;}
 
     public void setAssignment(Assignment assignment) {this.assignment = assignment;}
+
+    public String getQuestion() {
+        return question;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "questionId=" + questionId +
+                ", question='" + question + '\'' +
+                ", averageTime=" + averageTime +
+                ", averageCorrect=" + averageCorrect +
+                ", averageIncorrect=" + averageIncorrect +
+                '}';
+    }
 }

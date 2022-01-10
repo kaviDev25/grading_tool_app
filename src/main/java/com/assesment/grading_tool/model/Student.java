@@ -9,21 +9,20 @@ import java.util.List;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(nullable = false)
     private String name;
-
+    //...Student follow 1..* Courses and Course is followed by many students. So, Many to Many relationship
     @ManyToMany
     @JoinTable(name = "student_courses" , joinColumns = @JoinColumn(name = "sid"), inverseJoinColumns = @JoinColumn(name = "cid"))
     private List<Course> courses = new ArrayList<>();
-
 
 
     public Student(String name) {
         this.name = name;
     }
 
-    public Student(Long id, String name, List<Course> courses) {
+    public Student(int id, String name, List<Course> courses) {
         this.id = id;
         this.name = name;
         this.courses = courses;
@@ -38,11 +37,11 @@ public class Student {
         courses.add(c);
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

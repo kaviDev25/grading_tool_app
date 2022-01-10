@@ -9,19 +9,22 @@ public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "assignmentId", nullable = false)
-    private Long assignmentId;
+    private int assignmentId;
     @Column(nullable = false)
     private String topic;
 
+    //...There is 1...* assignments in a one course
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
+    //...There is 1...* questions in one assignment
     @OneToMany(
             mappedBy = "assignment",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
+
 
     public Assignment(String topic, Course course) {
         this.topic = topic;
@@ -31,9 +34,9 @@ public class Assignment {
     public Assignment() {
     }
 
-    public Long getId() {return assignmentId;}
+    public int getId() {return assignmentId;}
 
-    public void setId(Long assignmentId) {this.assignmentId = assignmentId;}
+    public void setId(int assignmentId) {this.assignmentId = assignmentId;}
 
     public String getTopic() {return topic;}
 

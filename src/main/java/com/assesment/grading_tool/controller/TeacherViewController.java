@@ -1,5 +1,6 @@
 package com.assesment.grading_tool.controller;
 
+import com.assesment.grading_tool.model.Question;
 import com.assesment.grading_tool.model.Submissions;
 import com.assesment.grading_tool.service.CourseService;
 import com.assesment.grading_tool.service.QuestionService;
@@ -22,15 +23,21 @@ public class TeacherViewController {
     private final SubmissionService submissionService;
     private final QuestionService questionService;
 
-
     public TeacherViewController(CourseService courseService, SubmissionService submissionService, QuestionService questionService) {
         this.courseService = courseService;
         this.submissionService = submissionService;
         this.questionService = questionService;
     }
 
-    @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<Submissions>> ViewGradesOfCourse(@PathVariable("courseId") long courseId)
+
+
+    /**
+     * Techer View
+     * Overall Grade of assignment per course API
+     */
+
+    @GetMapping("/overallGrade/{courseId}")
+    public ResponseEntity<List<Submissions>> ViewGradesOfCourse(@PathVariable("courseId") int courseId)
     {
         List<Submissions> s = submissionService.getSubmissionsOfStudents();
         List<Submissions> sortedAssignments = new ArrayList<>();
@@ -53,7 +60,45 @@ public class TeacherViewController {
             System.out.println(e + " " + "occurred");
         }
 
-        sortedAssignments.forEach(System.out::println);
         return new ResponseEntity<>(sortedAssignments, HttpStatus.OK);
+    }
+
+
+    /**
+     * Teacher View
+     * Statistics for each question
+     */
+
+    @GetMapping("/statistics")
+    public ResponseEntity<List<Question>> ViewStatisticsPerQuestion()
+    {
+        List<Question> questions = questionService.getAllQuestions();
+        double averageTime = 0;
+        int averageCorrect,averageIncorrect = 0;
+        List<Question> statistics = new ArrayList<>();
+        int qid;
+        String qName;
+        Question stat;
+
+        try {
+
+            for (int i = 0; i < questions.size(); i++) {
+                qid = questions.get(i).getQuestionId();
+                qName = questions.get(i).getQuestion();
+                averageTime = questions.get(i).getTotalTimeSpentInHrs() / questions.get(i).getTotalSubmissions();
+                averageCorrect = questions.get(i).getTotalCorrectAnswers() / questions.get(i).getTotalSubmissions();
+                averageIncorrect = questions.get(i).getTotalIncorrectAnswers() / questions.get(i).getTotalSubmissions();
+
+                stat = new Question(qid, qName, averageTime, averageCorrect, averageIncorrect);
+                statistics.add(stat);
+
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 }

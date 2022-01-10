@@ -10,15 +10,17 @@ import java.util.Set;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column(nullable = false)
     private String keyName;
     @Column(nullable = false)
     private String courseName;
 
+    //...Student follow 1...* Courses and Course is followed by many students. So, Many to Many relationship
     @ManyToMany(mappedBy = "courses")
     private List<Student> students = new ArrayList<>();
 
+    //...Course has 1...* assignments. So in Course Entity it is One To Many
     @OneToMany(
             mappedBy = "course",
             cascade = CascadeType.ALL,
@@ -26,7 +28,7 @@ public class Course {
     private List<Assignment> assignments = new ArrayList<>();
 
 
-    public Course(Long id, String keyName, String courseName) {
+    public Course(int id, String keyName, String courseName) {
         this.id = id;
         this.keyName = keyName;
         this.courseName = courseName;
@@ -38,14 +40,13 @@ public class Course {
     }
 
     public Course() {
-
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
